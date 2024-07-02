@@ -123,20 +123,238 @@ public class Manager {
             Random random = new Random();
             StringBuilder CAPTCHA = new StringBuilder();
 
-            for(int i=0 ; i<6 ; i++) {
+            String[] asciiArtZero = {
+                    " ##### ",
+                    "#     #",
+                    "#     #",
+                    "#     #",
+                    "#     #",
+                    "#     #",
+                    " ##### "
+            };
+            String[] asciiArtOne = {
+                    "   #  ",
+                    "  ##  ",
+                    "   #  ",
+                    "   #  ",
+                    " #####"
+            };
+
+            String[] asciiArtTwo = {
+                    " ##### ",
+                    "#     #",
+                    "      #",
+                    " ##### ",
+                    "#      ",
+                    "#      ",
+                    "#######"
+            };
+            String[] asciiArtThree = {
+                    " ##### ",
+                    "#     #",
+                    "      #",
+                    " ##### ",
+                    "      #",
+                    "#     #",
+                    " ##### "
+            };
+            String[] asciiArtFour = {
+                    "   #   ",
+                    "  ##   ",
+                    " # #   ",
+                    "#  #   ",
+                    "######",
+                    "   #   ",
+                    "   #   "
+            };
+
+            String[] asciiArtFive = {
+                    "######",
+                    "#     ",
+                    "#     ",
+                    "##### ",
+                    "     #",
+                    "     #",
+                    "##### "
+            };
+            String[] asciiArtSix = {
+                    " ##### ",
+                    "#      ",
+                    "#      ",
+                    "###### ",
+                    "#     #",
+                    "#     #",
+                    " ##### "
+            };
+            String[] asciiArtSeven = {
+                    "#######",
+                    "      #",
+                    "     # ",
+                    "    #  ",
+                    "   #   ",
+                    "  #    ",
+                    " #     "
+            };
+            String[] asciiArtEight = {
+                    " ##### ",
+                    "#     #",
+                    "#     #",
+                    " ##### ",
+                    "#     #",
+                    "#     #",
+                    " ##### "
+            };
+            String[] asciiArtNine = {
+                    " ##### ",
+                    "#     #",
+                    "#     #",
+                    " ######",
+                    "      #",
+                    "#     #",
+                    " ##### "
+            };
+
+            String input ;
+
+
+            for (int i = 0; i < 6; i++) {
                 CAPTCHA.append(digitChars.charAt(random.nextInt(digitChars.length())));
             }
-            System.out.println(String.valueOf(CAPTCHA));
-
-            for(int i=0 ; i<String.valueOf(CAPTCHA).length() ; i++){
-                if(String.valueOf(CAPTCHA).charAt(i) == '0'){
-                    System.out.print();
+            for (int i = 0; i < String.valueOf(CAPTCHA).length(); i++) {
+                if (String.valueOf(CAPTCHA).charAt(i) == '0') {
+                    for (String line : asciiArtZero) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '1') {
+                    for (String line : asciiArtOne) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '2') {
+                    for (String line : asciiArtTwo) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '3') {
+                    for (String line : asciiArtThree) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '4') {
+                    for (String line : asciiArtFour) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '5') {
+                    for (String line : asciiArtFive) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '6') {
+                    for (String line : asciiArtSix) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '7') {
+                    for (String line : asciiArtSeven) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '8') {
+                    for (String line : asciiArtEight) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
+                }
+                if (String.valueOf(CAPTCHA).charAt(i) == '9') {
+                    for (String line : asciiArtNine) {
+                        System.out.println(line);
+                    }
+                    System.out.println();
                 }
             }
 
+            while (!(input = MyConsole.nextLine()).equals(String.valueOf(CAPTCHA))) {
+                System.out.println("The CAPTCHA is not confirmed! , try again.");
+                CAPTCHA.delete(0 , 6) ;
+                for(int i=0 ; i<6 ; i++) {
+                    CAPTCHA.append(digitChars.charAt(random.nextInt(digitChars.length())));
+                }
 
+                for (int i = 0; i < String.valueOf(CAPTCHA).length(); i++) {
+                    if (String.valueOf(CAPTCHA).charAt(i) == '0') {
+                        for (String line : asciiArtZero) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '1') {
+                        for (String line : asciiArtOne) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '2') {
+                        for (String line : asciiArtTwo) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '3') {
+                        for (String line : asciiArtThree) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '4') {
+                        for (String line : asciiArtFour) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '5') {
+                        for (String line : asciiArtFive) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '6') {
+                        for (String line : asciiArtSix) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '7') {
+                        for (String line : asciiArtSeven) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '8') {
+                        for (String line : asciiArtEight) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                    if (String.valueOf(CAPTCHA).charAt(i) == '9') {
+                        for (String line : asciiArtNine) {
+                            System.out.println(line);
+                        }
+                        System.out.println();
+                    }
+                }
 
-
+            }
+            System.out.println("The CAPTCHA is successfully confirmed!");
 
         }
     }
@@ -242,5 +460,16 @@ public class Manager {
         }
         TempUser tempuser = new TempUser(matcher.group(1) , String.valueOf(password) , matcher.group(3) , matcher.group(2) , 1) ;
         tempUsers.add(tempuser) ;
+    }
+
+
+    // profile menu
+    public void showInformation(User user){
+        profileController profileController = user.getProfileController();
+        profileController.showInformation();
+    }
+    public void changePass(User user, String password){
+        profileController profileController = user.getProfileController();
+        profileController.setPassword(password);
     }
 }
