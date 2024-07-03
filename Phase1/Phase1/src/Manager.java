@@ -6,12 +6,16 @@ import java.util.regex.Matcher;
 public class Manager {
     ArrayList <TempUser> tempUsers = new ArrayList<>() ;
     ArrayList <User> users = new ArrayList<>() ;
+    ArrayList <User> LoggedInUser = new ArrayList<>() ;
 
     private Scanner MyConsole = new Scanner(System.in);
 
     public void CheckIfUserAndPasswordIsValidForSignUp(Matcher matcher){
+        if(!LoggedInUser.isEmpty()){
+            System.out.println("Another user is currently logged in and you can not sign up now!");
+            return;
+        }
         //Empty Field
-
         if(matcher.group(1).isEmpty() || matcher.group(2).isEmpty() || matcher.group(3).isEmpty() || matcher.group(4).isEmpty()){
             System.out.println("The information entered is not complete! , please try again.");
             return;
@@ -48,8 +52,13 @@ public class Manager {
         }
 
         //Duplicated Username
-        //?
 
+        for (User user : users) {
+            if(user.getUsername().equals(matcher.group(1))){
+                System.out.println("This username already exist!");
+                return;
+            }
+        }
 
 
         //Weak Password
@@ -91,7 +100,7 @@ public class Manager {
 
         //Successful Signup
 
-        System.out.println("User created successfully. Please choose a security question :");
+        System.out.println("Main.User created successfully. Please choose a security question :");
         System.out.println("1-What is your father’s name ?");
         System.out.println("2-What is your favourite color ?");
         System.out.println("3-What was the name of your first pet?");
@@ -110,13 +119,6 @@ public class Manager {
             System.out.println("The password is not confirmed!");
         }
         else {
-            for (TempUser tempUser : tempUsers) {
-                if (tempUser.UserControl == 1) {
-                    User user = new User(tempUser.Username, tempUser.Password, tempUser.NickName, tempUser.Email, matcher.group(2), matcher.group(1));
-                    users.add(user) ;
-                    System.out.println("The password recovery question is successfully saved. ");
-                }
-            }
             System.out.println("Do the CAPTCHA below : ");
             //Generate Random numbers
             String digitChars = "0123456789";
@@ -357,12 +359,14 @@ public class Manager {
             System.out.println("The CAPTCHA is successfully confirmed!");
 
 
+            for (TempUser tempUser : tempUsers) {
+                if (tempUser.UserControl == 1) {
+                    User user = new User(tempUser.Username, tempUser.Password, tempUser.NickName, tempUser.Email, matcher.group(2), matcher.group(1) , 0);
+                    users.add(user) ;
 
-
-
-
-
-
+                    System.out.println("The password recovery question is successfully saved. ");
+                }
+            }
         }
     }
 
@@ -407,7 +411,12 @@ public class Manager {
 
 
         //Duplicated Username
-        //?
+        for (User user : users) {
+            if(user.getUsername().equals(matcher.group(1))){
+                System.out.println("This username already exist!");
+                return;
+            }
+        }
 
 
         //Invalid email
@@ -457,7 +466,7 @@ public class Manager {
 
         //Successful Signup
 
-        System.out.println("User created successfully. Please choose a security question :");
+        System.out.println("Main.User created successfully. Please choose a security question :");
         System.out.println("1-What is your father’s name ?");
         System.out.println("2-What is your favourite color ?");
         System.out.println("3-What was the name of your first pet?");
@@ -468,4 +477,177 @@ public class Manager {
         TempUser tempuser = new TempUser(matcher.group(1) , String.valueOf(password) , matcher.group(3) , matcher.group(2) , 1) ;
         tempUsers.add(tempuser) ;
     }
+
+    public boolean CheckIfUsernameExist(String Username){
+        for (User user : users) {
+            if(user.getUsername().equals(Username)){
+                return true ;
+            }
+        }
+        return false ;
+    }
+
+    public boolean CheckIfPasswordIsOkay(String Username , String Password){
+        for (User user : users) {
+            if(user.getUsername().equals(Username)){
+                if(user.getPassword().equals(Password)){
+                    return true ;
+                }
+            }
+        }
+        return false ;
+    }
+    public boolean CheckIfTheUserHasLoggedIn(String Username){
+        for (User user : LoggedInUser) {
+            if(user.getUsername().equals(Username)){
+                return true ;
+            }
+        }
+        return false ;
+    }
+    public User FindUserByUserName(String UserName){
+        boolean hasFoundTheUser = false ;
+        User tempuser = null ;
+        for (User user : users) {
+            if (user.getUsername().equals(UserName)){
+                hasFoundTheUser = true ;
+                tempuser = user ;
+
+                break;
+            }
+        }
+        if(hasFoundTheUser){
+            return tempuser ;
+        }
+        else {
+            return null ;
+        }
+    }
+
+    public void LoginCheckError(Matcher matcher){
+
+        if(CheckIfTheUserHasLoggedIn(matcher.group(1))){
+            System.out.println("The user has already logged in!");
+            return;
+        }
+        if(!CheckIfTheUserHasLoggedIn(matcher.group(1))) {
+            if(!LoggedInUser.isEmpty()){
+                System.out.println("Another user is currently logged in and you can not log in now!");
+                return;
+            }
+
+            if (LoggedInUser.isEmpty()) {
+                if (!CheckIfUsernameExist(matcher.group(1))) {
+                    System.out.println("Username doesn’t exist!");
+                    return;
+                }
+                if (!CheckIfPasswordIsOkay(matcher.group(1), matcher.group(2))) {
+                    System.out.println("Password and Username don’t match!");
+                    return;
+                }
+            }
+        }
+
+        System.out.println("user logged in successfully!");
+        LoggedInUser.clear();
+        LoggedInUser.add(FindUserByUserName(matcher.group(1))) ;
+    }
+
+    public void PasswordValidationErrors(String Password){
+        if(Password.length()<8){
+            System.out.println("The password must have atleast 8 characters!");
+            return;
+        }
+        boolean Has1UpperCaseLetter = false ;
+        boolean Has1LowerCaseLetter = false ;
+        boolean Has1NotLetterChar = false ;
+
+        for (char c : Password.toCharArray()) {
+            if(Character.isLowerCase(c)){
+                Has1LowerCaseLetter=true ;
+            }
+            if(Character.isUpperCase(c)){
+                Has1UpperCaseLetter=true ;
+            }
+            if(!Character.isLetter(c) && !Character.isDigit(c)){
+                Has1NotLetterChar=true ;
+            }
+        }
+
+        if(!Has1LowerCaseLetter || !Has1UpperCaseLetter || !Has1NotLetterChar){
+            System.out.println("The password must have atleast 1 uppercase and 1 lowercase and 1 (non-digit,non-letter) character!");
+            return;
+        }
+    }
+
+    public boolean CheckIfPasswordIsValid(String Password){
+        boolean IsDigitNumberOk = false ;
+        boolean IsFormatOk = false ;
+        if(Password.length()>=8){
+            IsDigitNumberOk = true ;
+        }
+
+        boolean Has1UpperCaseLetter = false ;
+        boolean Has1LowerCaseLetter = false ;
+        boolean Has1NotLetterChar = false ;
+
+        for (char c : Password.toCharArray()) {
+            if(Character.isLowerCase(c)){
+                Has1LowerCaseLetter=true ;
+            }
+            if(Character.isUpperCase(c)){
+                Has1UpperCaseLetter=true ;
+            }
+            if(!Character.isLetter(c) && !Character.isDigit(c)){
+                Has1NotLetterChar=true ;
+            }
+        }
+
+        if(Has1LowerCaseLetter && Has1UpperCaseLetter && Has1NotLetterChar){
+            IsFormatOk=true ;
+        }
+
+        if(IsFormatOk && IsDigitNumberOk){
+            return true ;
+        }
+        return false ;
+    }
+
+
+        public void f(Matcher matcher) {
+            String input;
+            String input1;
+            if (!CheckIfTheUserHasLoggedIn(matcher.group(1))) {
+                System.out.println("The user is not logged in!");
+                return;
+            }
+            if (CheckIfTheUserHasLoggedIn(matcher.group(1))) {
+
+                System.out.println("What is your PasswordRecoveryQuestionNumber?");
+                while (!(input = MyConsole.nextLine()).equals(FindUserByUserName(matcher.group(1)).PasswordRecoveryQuestionNumber)) {
+                    System.out.println("The PasswordRecoveryQuestionNumber is wrong , try again.");
+                }
+                System.out.println("What is your PasswordRecoveryQuestion?");
+                while (!(input = MyConsole.nextLine()).equals(FindUserByUserName(matcher.group(1)).getPasswordRecoveryQuestion())) {
+                    System.out.println("The PasswordRecoveryQuestion is wrong , try again.");
+                }
+                System.out.println("The PasswordRecoveryQuestion is successfully confirmed.");
+                System.out.println("Choose a new password for your account : ");
+
+                input1 = MyConsole.nextLine();
+                while (!CheckIfPasswordIsValid(input1)) {
+                    PasswordValidationErrors(input1);
+                    input1 = MyConsole.nextLine();
+                }
+
+                System.out.println("The new password is set for your account.");
+                FindUserByUserName(matcher.group(1)).setPassword(input);
+            }
+        }
+
+    public void Logout(){
+        System.out.println("Main.User "+LoggedInUser.get(0).getUsername()+" logged out successfully.");
+        LoggedInUser.clear();
+    }
+
 }

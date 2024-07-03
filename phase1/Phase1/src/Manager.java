@@ -100,7 +100,7 @@ public class Manager {
 
         //Successful Signup
 
-        System.out.println("User created successfully. Please choose a security question :");
+        System.out.println("Main.User created successfully. Please choose a security question :");
         System.out.println("1-What is your father’s name ?");
         System.out.println("2-What is your favourite color ?");
         System.out.println("3-What was the name of your first pet?");
@@ -466,7 +466,7 @@ public class Manager {
 
         //Successful Signup
 
-        System.out.println("User created successfully. Please choose a security question :");
+        System.out.println("Main.User created successfully. Please choose a security question :");
         System.out.println("1-What is your father’s name ?");
         System.out.println("2-What is your favourite color ?");
         System.out.println("3-What was the name of your first pet?");
@@ -646,7 +646,7 @@ public class Manager {
         }
 
     public void Logout(){
-        System.out.println("User "+LoggedInUser.get(0).getUsername()+" logged out successfully.");
+        System.out.println("Main.User "+LoggedInUser.get(0).getUsername()+" logged out successfully.");
         LoggedInUser.clear();
     }
 

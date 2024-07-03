@@ -6,7 +6,7 @@ public class InputProcessor {
     private Scanner MyConsole = new Scanner(System.in);
 
 
-    // یه کلاس Manager هم زدم تا یه سری تابع ها که شلوغ پلوغه بره اونور این کلاس خلوت تر شه
+    // یه کلاس Main.Manager هم زدم تا یه سری تابع ها که شلوغ پلوغه بره اونور این کلاس خلوت تر شه
     Manager manager = new Manager();
 
 

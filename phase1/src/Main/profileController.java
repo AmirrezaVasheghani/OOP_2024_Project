@@ -1,3 +1,5 @@
+package Main;
+
 public class profileController{
 
     private User user;
@@ -29,4 +31,11 @@ public class profileController{
         user.setEmail(email);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

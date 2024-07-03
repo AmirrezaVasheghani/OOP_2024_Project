@@ -1,9 +1,10 @@
-import java.lang.reflect.Array;
+package Main;
+
+import Main.profileController;
+
 import java.util.ArrayList;
 
 public class User {
-    private Recoveryq recoveryq;
-    private ArrayList<Card> cards;
     private int level;
     private int xp;
     private int coins;
@@ -14,6 +15,10 @@ public class User {
     private String PasswordRecoveryQuestion ;
     private String PasswordRecoveryQuestionNumber ;
     private profileController profileController;
+    private int UnsuccessfulLogInAttempts;
+
+
+
 
     public User(String username, String password, String nickname, String email) {
         this.Username = username;
@@ -23,8 +28,11 @@ public class User {
         this.profileController = new profileController(this);
     }
 
+    public void setPasswordRecoveryQuestion(String passwordRecoveryQuestion) {
+        PasswordRecoveryQuestion = passwordRecoveryQuestion;
+    }
 
-    public User(String username, String password, String nickName, String email, String passwordRecoveryQuestion, String passwordRecoveryQuestionNumber) {
+    public User(String username, String password, String nickName, String email, String passwordRecoveryQuestion, String passwordRecoveryQuestionNumber, int unsuccessfulLogInAttempts) {
         this.Username = username;
         this.Password = password;
         this.NickName = nickName;
@@ -32,6 +40,7 @@ public class User {
         this.PasswordRecoveryQuestion = passwordRecoveryQuestion;
         this.PasswordRecoveryQuestionNumber = passwordRecoveryQuestionNumber;
         this.profileController = new profileController(this);
+        UnsuccessfulLogInAttempts = unsuccessfulLogInAttempts;
         }
 
     public profileController getProfileController() {
@@ -68,6 +77,17 @@ public class User {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getPasswordRecoveryQuestion() {
+        return PasswordRecoveryQuestion;
+    }
+
+    public String getPasswordRecoveryQuestionNumber() {
+        return PasswordRecoveryQuestionNumber;
+    }
+    public int getUnsuccessfulLogInAttempts() {
+        return UnsuccessfulLogInAttempts;
     }
 }
 
